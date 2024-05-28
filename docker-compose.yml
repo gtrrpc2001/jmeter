@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  jmeter:
+    image: justb4/jmeter:latest
+    container_name: jmeter
+    volumes:
+      - ./jmeter:/jmeter
+      - ./jmeter/user.properties:/jmeter/user.properties
+    working_dir: /jmeter
+    command: > 
+      -n -t /jmeter/test-plan.jmx 
+      -q /jmeter/user.properties
+      -l /jmeter/results/results.jtl 
+      -j /jmeter/logs/jmeter.log
+    networks:
+      - project_default
+
+networks:
+  project_default:
+    external: true
+
